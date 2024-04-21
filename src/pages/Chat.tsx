@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const page = () => {
@@ -106,7 +106,11 @@ const page = () => {
                     <div></div>
                   </div>
                 ) : null}
-                <div className='mr-auto ml-[10px] text-left px-3 max-w-[35rem] py-2 mt-8 rounded-lg font-["Merriweather"]'>
+                <div
+                  className={`${
+                    !chatStarted && "hidden"
+                  } mr-auto ml-[10px] text-left px-3 max-w-[35rem] py-2 mt-8 rounded-lg font-["Merriweather"]`}
+                >
                   <div className="text-lg flex justify-start gap-2 items-center mb-2">
                     <svg
                       className="w-5 h-5"
