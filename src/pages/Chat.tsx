@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const page = () => {
   type Conversation = Array<{
@@ -14,7 +15,7 @@ const page = () => {
     },
   ]);
 
-  const [chatStarted, setChatStarted] = useState(false);
+  const [chatStarted, setChatStarted] = useState(true);
   const [textLoading, setTextLoading] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
@@ -35,8 +36,9 @@ const page = () => {
                 chatStarted ? "top-[15%]" : "top-[30%]"
               }`}
             >
-              <div className="rounded-full bg-white m-auto inline-block">
+              <div className="rounded-full bg-white m-auto inline-block overflow-hidden">
                 <img
+                  src="/ailady.png"
                   style={{
                     transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
                   }}
@@ -49,7 +51,7 @@ const page = () => {
                 onClick={() => {
                   setChatStarted(true);
                 }}
-                className={`py-3 px-3 mt-8 block m-auto font-["Merriweather"] bg-[#ffbfbf] rounded-full border-gray-600 border-solid border ${
+                className={`py-3 px-3 mt-8 block m-auto font-["Merriweather"] bg-[#eca9fc] rounded-full border-gray-600 border-solid border ${
                   chatStarted ? "hidden" : null
                 }`}
               >
@@ -73,9 +75,9 @@ const page = () => {
                 style={{
                   transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
                 }}
-                className={`w-[40rem] mt-10 relative flex flex-col ${
+                className={`w-[60rem] mt-10 relative flex flex-col ${
                   chatStarted
-                    ? "h-[20rem] opacity-100 overflow-y-auto"
+                    ? "h-[24rem] opacity-100 overflow-y-auto"
                     : "h-0 opacity-0"
                 }`}
               >
@@ -90,7 +92,7 @@ const page = () => {
                   ) : (
                     <div
                       key={i}
-                      className='ml-auto mr-[10px] text-right mt-8 bg-[#ffbfbf] px-3 max-w-96 py-2 rounded-lg font-["Merriweather"]'
+                      className='ml-auto mr-[10px] text-right mt-8 bg-[#eca9fc] px-3 max-w-96 py-2 rounded-lg font-["Merriweather"]'
                     >
                       {elem.message}
                     </div>
@@ -104,6 +106,114 @@ const page = () => {
                     <div></div>
                   </div>
                 ) : null}
+                <div className='mr-auto ml-[10px] text-left px-3 max-w-[35rem] py-2 mt-8 rounded-lg font-["Merriweather"]'>
+                  <div className="text-lg flex justify-start gap-2 items-center mb-2">
+                    <svg
+                      className="w-5 h-5"
+                      data-slot="icon"
+                      fill="none"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
+                      ></path>
+                    </svg>
+                    <div>Sources</div>
+                  </div>
+                  <div className="flex justify-center gap-2">
+                    <Link
+                      to="https://indianexpress.com/article/explained/explained-sci-tech/anthropic-new-claude-3-ai-model-comparison-gpt-9197032/"
+                      target="_blank"
+                      className="p-2 border border-solid border-black rounded-md flex  items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
+                    >
+                      {`Why Anthropic calls the new Claude 3 its ‘most
+                      intelligent’ AI model yet | Explained News - The Indian
+                      Express`.slice(0, 100) + "..."}
+                    </Link>
+                    <Link
+                      to="https://en.wikipedia.org/wiki/Claude_(language_model)"
+                      target="_blank"
+                      className="p-2 border border-solid border-black rounded-md flex  items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
+                    >
+                      {`Claude (language model) - Wikipedia`.slice(0, 100) +
+                        "..."}
+                    </Link>
+                    <Link
+                      to="https://zapier.com/blog/claude-ai/"
+                      target="_blank"
+                      className="p-2 border border-solid border-black rounded-md flex  items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
+                    >
+                      {`Claude 3: A guide to Anthropic's AI models and chatbot`.slice(
+                        0,
+                        100
+                      ) + "..."}
+                    </Link>
+                  </div>
+                  <div className="text-lg flex justify-start gap-2 items-center mb-2 mt-5">
+                    <svg
+                      className="w-5 h-5"
+                      data-slot="icon"
+                      fill="none"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12"
+                      ></path>
+                    </svg>
+                    <div>Answer</div>
+                  </div>
+                  <div className="p-2 mt-4 border border-solid border-black rounded-md flex items-center text-justify">
+                    {
+                      "Anthropic's Claude 3 is a group of large language models (LLMs) developed by Anthropic, a company started in 2021 by a group of ex-OpenAI employees. Anthropic is focused on AI research with a strong emphasis on safety. The company has released a series of AI chatbots, with Claude being the most recent one powered by the Claude 3 LLM. Claude is an AI chatbot that collaborates with users, writes for them, and answers their questions.\n\nThe Claude 3 family consists of three models: Claude 3 Opus, Claude 3 Sonnet, and Claude 3 Haiku. These models offer increasingly powerful performance, with a balance between intelligence, speed, and cost based on specific use cases. Claude 3 Opus is the most powerful model, Claude 3 Sonnet is a middle model that is capable and price competitive, and Claude 3 Haiku is useful for any use case that requires instant responses.\n\nAnthropic's new models are twice as likely to answer questions correctly compared to similar AI chatbots. This is because the new models are less likely to generate incorrect information as answers, a common issue with other AI chatbots.\n\nAnthropic has also been working on the challenges businesses face when integrating AI into their workflows. The company aims to develop AI technology that benefits the public and is safe, responsible, and transparent.\n\nIn summary, Anthropic's Claude 3 is a group of LLMs that power the Claude AI chatbot. These models offer increasingly powerful performance, and the company is committed to developing AI technology that benefits the public while prioritizing safety and transparency"
+                    }
+                  </div>
+                  <div className="text-lg flex justify-start gap-2 items-center mb-2 mt-5">
+                    <svg
+                      className="w-5 h-5"
+                      data-slot="icon"
+                      fill="none"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                      ></path>
+                    </svg>
+                    <div>Related</div>
+                  </div>
+                  <div className="p-2 mt-4 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer">
+                    {
+                      "What are the three models that make up Anthropic's Claude 3, and how do they differ in terms of performance, intelligence, speed, and cost?"
+                    }
+                  </div>
+                  <div className="p-2 mt-2 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer">
+                    {
+                      "How does Anthropic ensure that its AI technology, including Claude 3, benefits the public while prioritizing safety, responsibility, and transparency?"
+                    }
+                  </div>
+                  <div className="p-2 mt-2 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer">
+                    {
+                      "What makes Anthropic's Claude 3 models twice as likely to answer questions correctly compared to other AI chatbots, and how does this impact their usefulness in business applications?"
+                    }
+                  </div>
+                </div>
                 <AlwaysScrollToBottom />
               </div>
               <div className="flex gap-8">
@@ -111,7 +221,7 @@ const page = () => {
                   style={{
                     transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
                   }}
-                  className={`h-12 w-[40rem] mt-10 translate-x-[32px] overflow-hidden  bg-white border border-solid border-[#ffbfbf] rounded-full shadow-md relative ${
+                  className={`h-12 w-[60rem] mt-10 translate-x-[32px] overflow-hidden bg-white border border-solid border-[#eca9fc] rounded-full shadow-md relative ${
                     chatStarted ? "opacity-100" : "opacity-0"
                   }`}
                 >
@@ -126,6 +236,7 @@ const page = () => {
                             message: inputMsg,
                           },
                         ]);
+                        setInputMsg("");
                       }
                     }}
                     onChange={(e) => {
@@ -144,7 +255,7 @@ const page = () => {
                         },
                       ]);
                     }}
-                    className="absolute right-[10px] bg-[#ffbfbf] rounded-full p-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                    className="absolute right-[10px] bg-[#eca9fc] rounded-full p-2 top-1/2 -translate-y-1/2 cursor-pointer"
                   >
                     <svg
                       className="w-5 h-5"
@@ -167,7 +278,7 @@ const page = () => {
                   onClick={() => {
                     setChatStarted(false);
                   }}
-                  className={`py-3 px-3 mt-8 block m-auto translate-x-[32px] cursor-pointer font-["Merriweather"] bg-[#ffbfbf] rounded-full border-gray-600 border-solid border ${
+                  className={`py-3 px-3 mt-8 block m-auto translate-x-[32px] cursor-pointer font-["Merriweather"] bg-[#eca9fc] rounded-full border-gray-600 border-solid border ${
                     chatStarted ? null : "hidden"
                   }`}
                 >
