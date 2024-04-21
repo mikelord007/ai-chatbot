@@ -74,6 +74,7 @@ module.exports = {
     },
     fontFamily: {
       Kaushan: ["Kaushan Script", "cursive"],
+      Jersey: ["'Jersey 25'", "sans-serif"],
     },
   },
   plugins: [require("tailwindcss-animate")],

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const page = () => {
   type Conversation = Array<
@@ -18,6 +19,16 @@ const page = () => {
         sender: "ai";
       }
   >;
+
+  const fetchResponse = async () => {
+    fetch("http://localhost:3005/ai/search_engine", {
+      method: "POST",
+      body: JSON.stringify({ message: "what are mutual funds" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json());
+  };
 
   const [conversation, setConversation] = useState<Conversation | null>([
     {
@@ -58,6 +69,9 @@ const page = () => {
   return (
     <>
       <div className="h-screen bg-[#e7caee] relative">
+        <div className="fixed top-[25px] left-[50px] text-[3rem] font-Jersey">
+          Shallu.ai
+        </div>
         <div className="flex justify-between">
           <div className="w-[calc(100%-20rem)] flex justify-center items-center mt-20 m-auto">
             <div
@@ -70,6 +84,9 @@ const page = () => {
             >
               <div className="rounded-full bg-white m-auto inline-block overflow-hidden">
                 <img
+                  onClick={() => {
+                    fetchResponse();
+                  }}
                   src="/ailady.png"
                   style={{
                     transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
