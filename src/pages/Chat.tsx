@@ -198,10 +198,19 @@ const page = () => {
                       </div>
                       {elem.followUpQuestions.map((e) => {
                         return (
-                          <div className="p-2 mt-4 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer">
-                            {
-                              "What are the three models that make up Anthropic's Claude 3, and how do they differ in terms of performance, intelligence, speed, and cost?"
-                            }
+                          <div
+                            onClick={() => {
+                              setConversation((prevConv) => [
+                                ...prevConv,
+                                {
+                                  message: e,
+                                  sender: "me",
+                                },
+                              ]);
+                            }}
+                            className="p-2 mt-4 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
+                          >
+                            {e}
                           </div>
                         );
                       })}
@@ -209,7 +218,7 @@ const page = () => {
                   ) : (
                     <div
                       key={i}
-                      className='ml-auto mr-[10px] text-right mt-8 bg-[#eca9fc] px-3 max-w-96 py-2 rounded-lg font-["Merriweather"]'
+                      className='ml-auto mr-[10px] text-left mt-8 bg-[#eca9fc] px-3 max-w-96 py-2 rounded-lg font-["Merriweather"]'
                     >
                       {elem.message}
                     </div>
