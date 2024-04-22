@@ -10,55 +10,21 @@ const page = () => {
         sender: "me";
       }
     | {
-        sources: Array<{
-          title: string;
-          link: string;
-        }>;
+        sources: Array<
+          Array<{
+            title: string;
+            link: string;
+          }>
+        >;
         answer: string;
         followUpQuestions: Array<string>;
         sender: "ai";
       }
   >;
 
-  const fetchResponse = async () => {
-    fetch("http://localhost:3005/ai/search_engine", {
-      method: "POST",
-      body: JSON.stringify({ message: "what are mutual funds" }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((r) => r.json());
-  };
+  const [conversation, setConversation] = useState<Conversation | null>([]);
 
-  const [conversation, setConversation] = useState<Conversation | null>([
-    {
-      sources: [
-        {
-          title:
-            "Why Anthropic calls the new Claude 3 its ‘most intelligent’ AI model yet | Explained News - The Indian Express",
-          link: "https://indianexpress.com/article/explained/explained-sci-tech/anthropic-new-claude-3-ai-model-comparison-gpt-9197032/",
-        },
-        {
-          title:
-            "Why Anthropic calls the new Claude 3 its ‘most intelligent’ AI model yet | Explained News - The Indian Express",
-          link: "https://indianexpress.com/article/explained/explained-sci-tech/anthropic-new-claude-3-ai-model-comparison-gpt-9197032/",
-        },
-        {
-          title:
-            "Why Anthropic calls the new Claude 3 its ‘most intelligent’ AI model yet | Explained News - The Indian Express",
-          link: "https://indianexpress.com/article/explained/explained-sci-tech/anthropic-new-claude-3-ai-model-comparison-gpt-9197032/",
-        },
-      ],
-      answer:
-        "Anthropic's Claude 3 is a group of large language models (LLMs) developed by Anthropic, a company started in 2021 by a group of ex-OpenAI employees. Anthropic is focused on AI research with a strong emphasis on safety. The company has released a series of AI chatbots, with Claude being the most recent one powered by the Claude 3 LLM. Claude is an AI chatbot that collaborates with users, writes for them, and answers their questions.\n\nThe Claude 3 family consists of three models: Claude 3 Opus, Claude 3 Sonnet, and Claude 3 Haiku. These models offer increasingly powerful performance, with a balance between intelligence, speed, and cost based on specific use cases. Claude 3 Opus is the most powerful model, Claude 3 Sonnet is a middle model that is capable and price competitive, and Claude 3 Haiku is useful for any use case that requires instant responses.\n\nAnthropic's new models are twice as likely to answer questions correctly compared to similar AI chatbots.",
-      followUpQuestions: [
-        "What are the three models that make up Anthropic's Claude 3, and how do they differ in terms of performance, intelligence, speed, and cost?",
-      ],
-      sender: "ai",
-    },
-  ]);
-
-  const [chatStarted, setChatStarted] = useState(true);
+  const [chatStarted, setChatStarted] = useState(false);
   const [textLoading, setTextLoading] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
@@ -66,12 +32,30 @@ const page = () => {
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
+  const fetchResponse = async (message: string) => {
+    const res = await fetch("http://localhost:3005/ai/search_engine", {
+      method: "POST",
+      body: JSON.stringify({ message }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((r) => r.json());
+    console.log("here: ", res);
+
+    setConversation((prev) => [...prev, { ...res, sender: "ai" }]);
+
+    setTextLoading(false);
+  };
+
   return (
     <>
       <div className="h-screen bg-[#e7caee] relative">
-        <div className="fixed top-[25px] left-[50px] text-[3rem] font-Jersey">
+        <Link
+          to="/"
+          className="fixed top-[25px] left-[50px] text-[3rem] font-Jersey"
+        >
           Shallu.ai
-        </div>
+        </Link>
         <div className="flex justify-between">
           <div className="w-[calc(100%-20rem)] flex justify-center items-center mt-20 m-auto">
             <div
@@ -84,9 +68,6 @@ const page = () => {
             >
               <div className="rounded-full bg-white m-auto inline-block overflow-hidden">
                 <img
-                  onClick={() => {
-                    fetchResponse();
-                  }}
                   src="/ailady.png"
                   style={{
                     transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
@@ -145,29 +126,29 @@ const page = () => {
                           className="w-5 h-5"
                           data-slot="icon"
                           fill="none"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
                           ></path>
                         </svg>
                         <div>Sources</div>
                       </div>
-                      <div className="flex justify-center gap-2">
+                      <div className="flex justify-center gap-2 text-[0.8rem]">
                         {elem.sources.map((e) => {
                           return (
                             <Link
-                              to={e.link}
+                              to={e[0].link}
                               target="_blank"
                               className="p-2 border border-solid border-black rounded-md flex  items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
                             >
-                              {e.title.slice(0, 100) + "..."}
+                              {e[0].title?.slice(0, 100) + "..."}
                             </Link>
                           );
                         })}
@@ -177,15 +158,15 @@ const page = () => {
                           className="w-5 h-5"
                           data-slot="icon"
                           fill="none"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12"
                           ></path>
                         </svg>
@@ -199,15 +180,15 @@ const page = () => {
                           className="w-5 h-5"
                           data-slot="icon"
                           fill="none"
-                          stroke-width="1.5"
+                          strokeWidth="1.5"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
                           ></path>
                         </svg>
@@ -224,6 +205,8 @@ const page = () => {
                                   sender: "me",
                                 },
                               ]);
+                              setTextLoading(true);
+                              fetchResponse(e);
                             }}
                             className="p-2 mt-4 border border-solid border-black rounded-md flex items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
                           >
@@ -272,6 +255,8 @@ const page = () => {
                             message: inputMsg,
                           },
                         ]);
+                        setTextLoading(true);
+                        fetchResponse(inputMsg);
                         setInputMsg("");
                       }
                     }}
@@ -290,6 +275,8 @@ const page = () => {
                           message: inputMsg,
                         },
                       ]);
+                      setTextLoading(true);
+                      fetchResponse(inputMsg);
                     }}
                     className="absolute right-[10px] bg-[#eca9fc] rounded-full p-2 top-1/2 -translate-y-1/2 cursor-pointer"
                   >
