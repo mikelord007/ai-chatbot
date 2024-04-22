@@ -33,13 +33,16 @@ const page = () => {
   const closeModal = () => setModalOpen(false);
 
   const fetchResponse = async (message: string) => {
-    const res = await fetch("http://localhost:3005/ai/search_engine", {
-      method: "POST",
-      body: JSON.stringify({ message }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((r) => r.json());
+    const res = await fetch(
+      "https://aimayhem-api.vercel.app/ai/search_engine",
+      {
+        method: "POST",
+        body: JSON.stringify({ message }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((r) => r.json());
     console.log("here: ", res);
 
     setConversation((prev) => [...prev, { ...res, sender: "ai" }]);
