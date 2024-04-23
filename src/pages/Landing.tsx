@@ -4,14 +4,14 @@ import { Novatrix } from "uvcanvas";
 const Landing = () => {
   return (
     <div className="h-screen opacity-80 relative">
-      <div className="fixed top-[25px] left-[50px] text-[3rem] font-Jersey">
+      <div className="fixed top-[25px] left-[25px] lg:left-[50px] text-[2rem] lg:text-[3rem] font-Jersey">
         Shallu.ai
       </div>
       <Novatrix />
       <Link
         to="https://wa.me/qr/VHCSC2GGFQPVE1"
         target="_blank"
-        className="fixed top-[45px] right-[80px] text-[3rem] font-Jersey cursor-pointer z-10"
+        className="fixed top-[40px] lg:top-[45px] right-[30px] lg:right-[80px] text-[3rem] font-Jersey cursor-pointer z-10"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ const Landing = () => {
       </Link>
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <h2 className="text-5xl text-center font-Kaushan font-bold tracking-wider [line-height:65px]">
+          <h2 className="text-3xl w-[17rem] lg:w-auto lg:text-5xl text-center font-Kaushan font-bold tracking-wider lg:[line-height:65px]">
             Policies and more, made super easy for you!
           </h2>
           <Link

@@ -34,7 +34,7 @@ const page = () => {
 
   const fetchResponse = async (message: string) => {
     const res = await fetch(
-      "http://ec2-65-2-175-26.ap-south-1.compute.amazonaws.com:3005/ai/search_engine",
+      "https://aimayhem-api.vercel.app/ai/search_engine",
       {
         method: "POST",
         body: JSON.stringify({ message }),
@@ -60,7 +60,7 @@ const page = () => {
       <div className="h-screen bg-[#e7caee] relative">
         <Link
           to="/"
-          className="fixed top-[25px] left-[50px] text-[3rem] font-Jersey"
+          className="fixed top-[25px] left-[25px] lg:left-[50px] text-[2rem] lg:text-[3rem] font-Jersey"
         >
           Shallu.ai
         </Link>
@@ -248,7 +248,7 @@ const page = () => {
                   style={{
                     transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
                   }}
-                  className={`h-12 w-[60rem] mt-10 translate-x-[32px] overflow-hidden bg-white border border-solid border-[#eca9fc] rounded-full shadow-md relative ${
+                  className={`h-12 lg:w-[60rem] mt-10 translate-x-[32px] overflow-hidden bg-white border border-solid border-[#eca9fc] rounded-full shadow-md relative ${
                     chatStarted ? "opacity-100" : "opacity-0"
                   }`}
                 >
