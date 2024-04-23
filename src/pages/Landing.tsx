@@ -10,6 +10,7 @@ const Landing = () => {
       <Novatrix />
       <Link
         to="https://wa.me/qr/VHCSC2GGFQPVE1"
+        target="_blank"
         className="fixed top-[45px] right-[80px] text-[3rem] font-Jersey cursor-pointer z-10"
       >
         <svg

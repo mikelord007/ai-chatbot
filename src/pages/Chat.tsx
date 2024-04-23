@@ -34,7 +34,7 @@ const page = () => {
 
   const fetchResponse = async (message: string) => {
     const res = await fetch(
-      "https://aimayhem-api.vercel.app/ai/search_engine",
+      "http://ec2-65-2-175-26.ap-south-1.compute.amazonaws.com:3005/ai/search_engine",
       {
         method: "POST",
         body: JSON.stringify({ message }),
@@ -42,8 +42,13 @@ const page = () => {
           "Content-Type": "application/json",
         },
       }
-    ).then((r) => r.json());
-    console.log("here: ", res);
+    )
+      .then((r) => r.json())
+      .catch((e) =>
+        alert(
+          "too many requests, api rate limit. Please give some time between requests"
+        )
+      );
 
     setConversation((prev) => [...prev, { ...res, sender: "ai" }]);
 
@@ -66,7 +71,7 @@ const page = () => {
                 transition: "all 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)",
               }}
               className={`flex flex-col items-center ${
-                chatStarted ? "top-[15%]" : "top-[30%]"
+                chatStarted ? "mt-[0rem]" : "mt-[5rem]"
               }`}
             >
               <div className="rounded-full bg-white m-auto inline-block overflow-hidden">
@@ -144,14 +149,14 @@ const page = () => {
                         <div>Sources</div>
                       </div>
                       <div className="flex justify-center gap-2 text-[0.8rem]">
-                        {elem.sources.map((e) => {
+                        {elem.sources?.map((e) => {
                           return (
                             <Link
-                              to={e[0].link}
+                              to={e[0]?.link}
                               target="_blank"
                               className="p-2 border border-solid border-black rounded-md flex  items-center text-justify hover:bg-gray-400 hover:cursor-pointer"
                             >
-                              {e[0].title?.slice(0, 100) + "..."}
+                              {e[0]?.title?.slice(0, 100) + "..."}
                             </Link>
                           );
                         })}
@@ -197,7 +202,7 @@ const page = () => {
                         </svg>
                         <div>Related</div>
                       </div>
-                      {elem.followUpQuestions.map((e) => {
+                      {elem.followUpQuestions?.map((e) => {
                         return (
                           <div
                             onClick={() => {
